@@ -1,4 +1,5 @@
 <?php
+
   /**
   * Requires the "PHP Email Form" library
   * The "PHP Email Form" library is available only in the pro version of the template
@@ -38,6 +39,9 @@
   // $contact->add_message( $_POST['message'], 'Message', 10);
 
   // echo $contact->send();
-  mail($receiving_email_address,$_POST['subject'],$_POST['message']);
-  echo 'email sent';
+  if(isset($_POST['submit'])){
+    mail($receiving_email_address,$_POST['subject'],$_POST['message']);
+  }
+  
+  
 ?>
