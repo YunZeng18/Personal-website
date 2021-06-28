@@ -10,11 +10,11 @@ function setup() {
     background(0);
 
     var x = 0;
-    for (var i = 0; i <= width / symbolSize; i++) {
+    for (var i = 0; i <= width / (symbolSize + 10); i++) {
         var stream = new Stream();
         stream.generateSymbols(x, random(-2000, 0));
         streams.push(stream);
-        x += symbolSize
+        x += (symbolSize + 10)
     }
 
     textFont('Consolas');
@@ -28,6 +28,7 @@ function draw() {
     streams.forEach(function (stream) {
         stream.render();
     });
+
 }
 function windowResized() {
     resizeCanvas(visualViewport.width, windowHeight);
@@ -68,7 +69,7 @@ function Symbol(x, y, speed, first, opacity) {
 
 function Stream() {
     this.symbols = [];
-    this.totalSymbols = round(random(5, 35));
+    this.totalSymbols = round(random(5, 20));
     this.speed = random(1, 5);
 
     this.generateSymbols = function (x, y) {
