@@ -31,6 +31,7 @@ function draw() {
 }
 function windowResized() {
     resizeCanvas(visualViewport.width, windowHeight);
+    draw();
 }
 
 function Symbol(x, y, speed, first, opacity) {
