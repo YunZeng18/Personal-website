@@ -10,11 +10,11 @@ function setup() {
     background(0);
 
     var x = 0;
-    for (var i = 0; i <= width / (symbolSize + 10); i++) {
+    for (var i = 0; i <= width / (symbolSize + 50); i++) {
         var stream = new Stream();
         stream.generateSymbols(x, random(-2000, 0));
         streams.push(stream);
-        x += (symbolSize + 10)
+        x += (symbolSize + 50)
     }
 
     textFont('Consolas');
@@ -22,11 +22,10 @@ function setup() {
 }
 
 function draw() {
-
-
     background(0, 150);
     streams.forEach(function (stream) {
         stream.render();
+
     });
 
 }
@@ -44,7 +43,7 @@ function Symbol(x, y, speed, first, opacity) {
     this.first = first;
     this.opacity = opacity;
 
-    this.switchInterval = round(random(2, 25));
+    this.switchInterval = round(random(20, 120));
 
     this.setToRandomSymbol = function () {
         var charType = round(random(0, 5));
@@ -62,7 +61,10 @@ function Symbol(x, y, speed, first, opacity) {
     }
 
     this.rain = function () {
-        this.y = (this.y >= height) ? 0 : this.y += this.speed;
+        this.y = (this.y >= height) ? -300 : this.y += this.speed;
+    }
+    this.randomSpeedChange = (speed) => {
+        this.speed = speed;
     }
 
 }
@@ -74,7 +76,7 @@ function Stream() {
 
     this.generateSymbols = function (x, y) {
         var opacity = 255;
-        var first = round(random(0, 4)) == 1;
+        var first = round(random(0, 3)) == 1;
         for (var i = 0; i <= this.totalSymbols; i++) {
             symbol = new Symbol(
                 x,
@@ -92,15 +94,28 @@ function Stream() {
     }
 
     this.render = function () {
-        this.symbols.forEach(function (symbol) {
+        let speedChange;
+
+        this.symbols.forEach(function (symbol, index) {
             if (symbol.first) {
-                fill(140, 255, 170, symbol.opacity);
+                fill(200, 255, 200, symbol.opacity);
             } else {
                 fill(0, 255, 70, symbol.opacity);
             }
             text(symbol.value, symbol.x, symbol.y);
             symbol.rain();
+
             symbol.setToRandomSymbol();
+
+            if (symbol.y >= height && index == 0) {
+                speedChange = random(1, 5);
+                symbol.first = round(random(0, 3)) == 1;
+            }
+            if (speedChange) {
+                symbol.randomSpeedChange(speedChange);
+            }
+
         });
     }
+
 }
