@@ -98,7 +98,7 @@ function Stream() {
 
         this.symbols.forEach(function (symbol, index) {
             if (symbol.first) {
-                fill(200, 255, 200, symbol.opacity);
+                fill(220, 255, 220, symbol.opacity);
             } else {
                 fill(0, 255, 70, symbol.opacity);
             }
